@@ -1,0 +1,49 @@
+{
+  "name": "cfp-vote-ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "export NODE_ENV='development' ; node index.js",
+    "clean": "rm -rf .next",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "NODE_ENV=production npx next build",
+    "heroku-postbuild": "npm run build",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/necccc/piosk-site.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/necccc/piosk-site/issues"
+  },
+  "engines": {
+    "node": "10.14.0"
+  },
+  "homepage": "https://github.com/necccc/piosk-site#readme",
+  "dependencies": {
+    "@material-ui/core": "^3.9.2",
+    "@weco/next-plugin-transpile-modules": "0.0.2",
+    "@zeit/next-sass": "^1.0.1",
+    "cookie-parser": "^1.4.4",
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "fast-redux": "^0.7.1",
+    "isomorphic-unfetch": "^3.0.0",
+    "jsrsasign": "^8.0.12",
+    "next": "^8.0.3",
+    "next-compose-plugins": "^2.1.1",
+    "next-redux-wrapper": "^3.0.0-alpha.1",
+    "node-sass": "^4.11.0",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "react-redux": "^6.0.1",
+    "redux": "^4.0.1",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
+    "uuid": "^3.3.2"
+  }
+}
