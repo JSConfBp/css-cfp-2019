@@ -3,6 +3,7 @@ if(process.env.NODE_ENV !== "production") {
 }
 
 const uuid = require('uuid/v4')
+
 process.env.PIOSK_NONCE = uuid()
 
 const server = require('./server')

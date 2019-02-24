@@ -51,20 +51,32 @@ module.exports = async (req, res) => {
 		return res.sendStatus(403);
 	}
 
-	const APIresponse = await fetch(`${process.env.API_URL}/v1/client`, {
-		method: 'POST',
-		headers: {
-			'Accept': 'application/json',
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({ github_id: (userData.id).toString(), name: userData.name, token: access_token })
-	}).then(response => response.json())
-	.catch(e => {
-		console.error(e)
-		res.sendStatus(500);
-	})
+
+	//console.log(userData);
+
+
+	const APIresponse = await fetch(`${process.env.API_URL}/v1/client`,
+		{
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				github_id: (userData.id).toString(),
+				name: userData.name,
+				login: userData.login,
+				token: access_token
+			})
+		})
+		.then(response => response.json())
+		.catch(e => {
+			console.error(e)
+			res.sendStatus(500);
+		})
+
 
 	res
 		.cookie('access_token', access_token, { expires: new Date(Date.now() + 96000000) })
-		.redirect(`/client`)
+		.redirect(`/user`)
 }

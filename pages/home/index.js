@@ -5,7 +5,7 @@ import Authenticated from '../../components/Auth'
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
-import Link from '../../components/Link'
+import GithubLogin from '../../components/GithubLogin'
 
 const styles = theme => ({
 	root: {
@@ -29,12 +29,6 @@ const styles = theme => ({
 
 class Index extends React.Component {
 
-	static async getInitialProps({ req }) {
-		const userAgent = req ? req.headers['user-agent'] : navigator.userAgent
-
-		return { userAgent }
-	}
-
 	render() {
 		const { classes } = this.props;
 		return <div className={classes.root}>
@@ -46,6 +40,8 @@ class Index extends React.Component {
 			</Typography>
 			<Typography component="p">
 				Bla
+
+				<GithubLogin>Login</GithubLogin>
 			</Typography>
 
 		</div>
@@ -55,8 +51,8 @@ class Index extends React.Component {
 
 	static getInitialProps({ req, store, auth }) {
 
-		//console.log('state', store.getState());
-		//console.log(auth);
+		console.log('state', store.getState());
+		console.log(auth);
 
 		return {}
 	}

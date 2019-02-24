@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import fetch from 'isomorphic-unfetch'
-import { KJUR } from 'jsrsasign'
 import getConfig from 'next/config'
+import { KJUR } from 'jsrsasign'
 
 const { publicRuntimeConfig: { api_url } } = getConfig()
 const isServer = typeof window === 'undefined';
@@ -23,25 +23,30 @@ const authStore = (auth) => {
 }
 
 const getToken = async function (access_token) {
-	const tokenResponse = await fetch(`${api_url}/v1/token`, {
-		method: 'POST',
-		headers: {
-			'Accept': 'application/json',
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({ token: access_token })
-	}).then(response => response.json())
-	.catch(e => ({ error: true, e }))
+	const tokenResponse = await fetch(`${api_url}/v1/token`,
+		{
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ token: access_token })
+		})
+		.then(response => response.json())
+		.catch(e => ({ error: true, e }))
 
 	if (tokenResponse.error) {
 		console.error(tokenResponse)
 		throw new Error(tokenResponse.error)
 	}
 
-	const { jwt: token, name } = tokenResponse
+	//console.log('getToken', tokenResponse);
+
+
+	const { jwt: token, name, login, admin } = tokenResponse
 	const { sub: userId } = decodeToken(token)
 
-	return { token, userId, name }
+	return { token, userId, name, login, isAdmin: admin }
 }
 
 export const AuthContext = React.createContext({});
@@ -70,7 +75,7 @@ export const wrapWithAuth = (App) => {
 						app.ctx.auth = auth
 						//console.log('authenticate 2 - has token!');
 					} catch (e) {
-						//console.log('authenticate 2 - TOKEN ERR');
+						console.log('authenticate 2 - TOKEN ERR', e);
 					}
 				}
 			} else {

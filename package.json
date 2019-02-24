@@ -24,6 +24,9 @@
     "node": "10.14.0"
   },
   "homepage": "https://github.com/necccc/piosk-site#readme",
+  "devDependencies": {
+    "redux-devtools-extension": "^2.13.8"
+  },
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "@weco/next-plugin-transpile-modules": "0.0.2",
@@ -42,7 +45,6 @@
     "react-dom": "^16.8.3",
     "react-redux": "^6.0.1",
     "redux": "^4.0.1",
-    "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
     "uuid": "^3.3.2"
   }
