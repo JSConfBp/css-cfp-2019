@@ -69,6 +69,8 @@ class AdminMenu extends React.Component {
 
 			{ year ? 'delete year' : (<CsvUpload onFile={(...data) => this.onFile(...data)} />)}
 
+
+set vote mode (first round, second round)
 		</div>
 		);
 	}

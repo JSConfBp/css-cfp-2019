@@ -25,7 +25,8 @@ const nextConfig = {
 		gh_client_id: process.env.GH_OAUTH_CLIENT_ID,
 		gh_redirect_uri: process.env.GH_REDIRECT_URI,
 		api_url: process.env.API_URL,
-		nonce_state: process.env.PIOSK_NONCE
+		nonce_state: process.env.PIOSK_NONCE,
+		vote_fields: JSON.parse(process.env.CFP_VOTE_FIELDS || "[]")
 	},
 
 	exportPathMap: routing,

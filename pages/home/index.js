@@ -36,12 +36,10 @@ class Index extends React.Component {
 
 		<div className={classes.paper}>
 			<Typography className={classes.title} variant="headline" component="h3">
-				Vote
+				Conference CFP Voting
 			</Typography>
 			<Typography component="p">
-				Bla
-
-				<GithubLogin>Login</GithubLogin>
+				<GithubLogin>Login with GitHub</GithubLogin>
 			</Typography>
 
 		</div>
@@ -50,8 +48,6 @@ class Index extends React.Component {
 
 
 	static getInitialProps({ req, store, auth }) {
-
-		console.log('state', store.getState());
 		console.log(auth);
 
 		return {}
@@ -60,4 +56,4 @@ class Index extends React.Component {
 }
 
 
-export default Authenticated(withRedux(withStyles(styles)(Index)))
+export default Authenticated(withStyles(styles)(Index))

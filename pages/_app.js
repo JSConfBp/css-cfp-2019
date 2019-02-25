@@ -1,9 +1,20 @@
 import React from 'react'
-import { Provider } from 'react-redux'
 import App, { Container } from 'next/app'
-import { wrapWithStore } from '../store'
-
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import deepOrange from '@material-ui/core/colors/deepOrange';
 import { wrapWithAuth } from '../components/Auth'
+import Route from '../components/Route'
+import routing from '../routing'
+
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#212121',
+    },
+    secondary: deepOrange,
+  },
+});
 
 class MyApp extends App {
 
@@ -17,11 +28,13 @@ class MyApp extends App {
 		const { Component, pageProps, store } = this.props
 
 	  return <Container>
-				<Provider store={store}>
+			<MuiThemeProvider theme={theme}>
+				<Route.Provider value={routing()}>
 					<Component {...pageProps} />
-				</Provider>
-	  </Container>
+				</Route.Provider>
+			</MuiThemeProvider>
+		</Container>
 	}
 }
 
-export default wrapWithAuth(wrapWithStore(MyApp))
+export default wrapWithAuth(MyApp)
