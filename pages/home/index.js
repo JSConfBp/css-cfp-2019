@@ -1,5 +1,4 @@
 import React from 'react'
-import withRedux from './state'
 import Authenticated from '../../components/Auth'
 
 import Typography from '@material-ui/core/Typography';
