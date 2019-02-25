@@ -5,10 +5,10 @@ const withPlugins = require('next-compose-plugins');
 
 
 const sassConfig = {
-	cssModules: false,
+	cssModules: true,
 	cssLoaderOptions: {
-		importLoaders: 1,
-		localIdentName: '[local]___[name]___[hash:base64:5]'
+	  importLoaders: 1,
+	  localIdentName: "[local]___[hash:base64:5]",
 	}
 }
 
