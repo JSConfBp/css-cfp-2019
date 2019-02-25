@@ -5,7 +5,7 @@ const withPlugins = require('next-compose-plugins');
 
 
 const sassConfig = {
-	cssModules: true,
+	cssModules: false,
 	cssLoaderOptions: {
 	  importLoaders: 1,
 	  localIdentName: "[local]___[hash:base64:5]",

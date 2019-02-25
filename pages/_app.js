@@ -13,6 +13,9 @@ const theme = createMuiTheme({
       main: '#212121',
     },
     secondary: deepOrange,
+	},
+	typography: {
+    useNextVariants: true,
   },
 });
 

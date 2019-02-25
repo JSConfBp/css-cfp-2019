@@ -23,8 +23,10 @@ const styles = theme => ({
 		margin: '0 auto',
 		[theme.breakpoints.down('sm')]: {
 			marginBottom: 100,
+			marginTop: 32,
 		},
 		[theme.breakpoints.up('sm')]: {
+			marginBottom: 32,
 			marginTop: 100,
 		},
 
@@ -108,18 +110,22 @@ class Vote extends React.Component {
 				<Paper className={classes.paper}>
 					{vote_fields.map((field, i) => {
 						if (i === 0) {
-							return (<Typography variant="headline" className={classes.title} component="h3" key={`field-${i}`}>
+							return (<Typography variant="h3" className={classes.title} component="h3" key={`field-${i}`}>
 								{talk.fields[field]}
 							</Typography>)
 						} else {
-							return (<Typography component="p" className={classes.p}>
+							return (<Typography variant="body1" className={classes.p}>
 							{talk.fields[field]}
 							</Typography>)
 						}
 					})}
-
-					<VoteControls onVote={ value => this.onVote(talk.id, value) }/>
 				</Paper>
+
+				<VoteControls
+					onVote={ value => this.onVote(talk.id, value) }
+					stage={'stage_1'}
+				/>
+
 				</Grid>
 			</Grid>
 

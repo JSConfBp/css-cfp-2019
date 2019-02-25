@@ -5,7 +5,9 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
+import Link from '../../components/Link';
 import Authenticated from '../../components/Auth'
 import MenuBar from '../../components/MenuBar';
 import AdminMenu from '../../components/AdminMenu'
@@ -70,7 +72,7 @@ class Index extends React.Component {
 	}
 
 	render() {
-		console.log(this.props, this.state)
+		//console.log(this.props, this.state)
 
 		const { cfp, stats } = this.state
 		const { classes, auth: {login, isAdmin, token} } = this.props
@@ -79,18 +81,33 @@ class Index extends React.Component {
 		<Grid container spacing={24}>
 			<Grid item xs={12}>
 			<Paper className={classes.paper}>
-				<Typography className={classes.title} variant="headline" component="h3">
+				<Typography className={classes.title} variant="h2">
 					Hello {login}
 				</Typography>
-				<Typography component="p">
-					<Progress />
+
+				{ cfp.year ? (<>
+					<Typography variant="body1">
+						Your Progress
+					</Typography>
+					<Typography variant="body1" component="div">
+						<Progress name={login} stats={stats} />
+					</Typography>
+				</>) : '' }
+
+				<Typography component="div">
+					<Button variant={'contained'} >
+						<Link to="vote"><a>
+							Vote!
+						</a></Link>
+					</Button>
 				</Typography>
-				<Typography component="p">
-					{ cfp.year ? (<strong>Number of proposals: { cfp.count }</strong>) : ''}
-				</Typography>
+
+				<Typography component="div">
 				{(isAdmin ? (
 					<AdminMenu onUpdate={(data) => this.updateCfp(data)} token={ token } year={ cfp.year }/>
 				) : '')}
+				</Typography>
+
 			</Paper>
 			</Grid>
 		</Grid>

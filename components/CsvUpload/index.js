@@ -10,6 +10,7 @@ const styles = theme => ({
     margin: theme.spacing.unit,
   },
   button: {
+		color: '',
 	  marginTop: theme.spacing.unit * 5,
   },
   input: {
@@ -68,7 +69,7 @@ class CsvUpload extends React.Component {
 					onChange={this.handleChange}
 				/>
 				<label htmlFor="raised-button-file">
-					<Button variant={'contained'} color="primary" component="span" className={classes.button}>
+					<Button variant={'contained'} color="secondary" component="span" className={classes.button}>
 						Upload submissions as CSV export
 					</Button>
 				</label>
