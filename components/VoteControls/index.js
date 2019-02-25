@@ -27,7 +27,7 @@ const styles = theme => ({
 		margin: '0 auto',
 		display: 'flex',
 		justifyContent: 'space-between',
-		[theme.breakpoints.down('xs')]: {
+		[theme.breakpoints.down('sm')]: {
 			display: 'none'
 		}
 	}
@@ -54,6 +54,7 @@ class VoteControls extends React.Component {
 		<Paper className={ classes.paper }>
 			{votingUi.map((vote, i) => (
 				<Button
+					key={`vote_${vote.value}`}
 					onClick={e => this.vote(vote.value)}
 					variant={'outlined'}
 					color="primary">

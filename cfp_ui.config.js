@@ -1,4 +1,14 @@
 module.exports = {
+	voting_stages: [
+		{
+			name: 'stage_1',
+			label: 'First Voting Round'
+		},
+		{
+			name: 'stage_2',
+			label: 'Shortlisting Round'
+		}
+	],
 	voting_ui: {
 		stage_1: [
 			{ label: '1', value: 1 },

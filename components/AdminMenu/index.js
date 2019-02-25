@@ -1,24 +1,33 @@
 import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import NativeSelect from '@material-ui/core/NativeSelect';
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
 
 import CsvUpload from '../CsvUpload'
 import getConfig from 'next/config'
 
+import VoteUIConfig from '../../cfp_ui.config'
+
 const { publicRuntimeConfig: { api_url } } = getConfig()
 
 const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
+
   formControl: {
-    margin: theme.spacing.unit,
+    marginTop: 20,
   },
   button: {
 	  marginTop: theme.spacing.unit * 5,
   },
   input: {
 	  display: 'none'
-  }
+	},
+	h5: {
+		marginBottom: 32,
+	}
 });
 
 class AdminMenu extends React.Component {
@@ -34,7 +43,7 @@ class AdminMenu extends React.Component {
 		}
 	}
 
-	onFile = (year, fileContent) => {
+	onFile(year, fileContent) {
 		const { token } = this.props
 
 		fetch(`${api_url}/v1/cfp`, {
@@ -58,21 +67,50 @@ class AdminMenu extends React.Component {
 					error: this.state.activeStep,
 				});
 		  })
-	};
+	}
+
+	handleVoteState (val) {
+		console.log(val);
+		this.setState({
+			votingStage: val
+		})
+
+	}
 
 	render() {
 		const { classes } = this.props
-		const { year } = this.state
+		const { year, votingStage } = this.state
+		const { voting_stages } = VoteUIConfig
 
-	  return (
-		<div className={classes.container}>
+	  return (<Typography component="div">
+
+			<Typography variant="h5" className={classes.h5}>
+				Administration
+			</Typography>
+
+			<Typography variant="p">
+				You're marked as an admin, so you can access some advanced features.<br />
+				But be careful, you know <em>"with great power comes great responsibility"</em>!
+			</Typography>
 
 			{ year ? 'delete year' : (<CsvUpload onFile={(...data) => this.onFile(...data)} />)}
 
+			<FormControl className={classes.formControl}>
+          <InputLabel htmlFor="stage-helper">Voting Stage</InputLabel>
+          <NativeSelect
+            value={votingStage}
+            onChange={e => this.handleVoteState(e.target.value)}
+            input={<Input name="voting_stage" id="stage-helper" />}
+          >
+            <option value=""></option>
+						{voting_stages.map(stage => (
+							<option value={stage.name}>{stage.label}</option>
+						))}
+          </NativeSelect>
+          <FormHelperText>Update this if you're ready to summarize the first vote round</FormHelperText>
+        </FormControl>
 
-set vote mode (first round, second round)
-		</div>
-		);
+			</Typography>);
 	}
   }
 

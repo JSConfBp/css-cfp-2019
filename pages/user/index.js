@@ -92,7 +92,6 @@ class Index extends React.Component {
 					<Typography variant="body1" component="div">
 						<Progress name={login} stats={stats} />
 					</Typography>
-				</>) : '' }
 
 				<Typography component="div">
 					<Button variant={'contained'} >
@@ -102,11 +101,10 @@ class Index extends React.Component {
 					</Button>
 				</Typography>
 
-				<Typography component="div">
+				</>) : '' }
 				{(isAdmin ? (
 					<AdminMenu onUpdate={(data) => this.updateCfp(data)} token={ token } year={ cfp.year }/>
 				) : '')}
-				</Typography>
 
 			</Paper>
 			</Grid>

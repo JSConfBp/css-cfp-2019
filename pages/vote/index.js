@@ -10,6 +10,9 @@ import Authenticated from '../../components/Auth'
 import MenuBar from '../../components/MenuBar'
 import VoteControls from '../../components/VoteControls'
 
+
+import Modal from '@material-ui/core/Modal';
+
 const { publicRuntimeConfig: { api_url, vote_fields } } = getConfig()
 
 const styles = theme => ({
@@ -21,16 +24,28 @@ const styles = theme => ({
 		paddingTop: 32,
 		paddingBottom: 32,
 		margin: '0 auto',
-		[theme.breakpoints.down('sm')]: {
+		[theme.breakpoints.down('md')]: {
 			marginBottom: 100,
 			marginTop: 32,
 		},
-		[theme.breakpoints.up('sm')]: {
+		[theme.breakpoints.up('md')]: {
 			marginBottom: 32,
 			marginTop: 100,
 		},
-
 	}),
+	modal: {
+		bottom: 40,
+		minHeight: '20vh',
+		width: '90%',
+		position: 'absolute',
+		left: '50%',
+		transform: 'translateX(-50%)',
+    	backgroundColor: theme.palette.background.paper,
+    	boxShadow: theme.shadows[5],
+
+    	outline: 'none',
+
+	},
 	title: {
 		marginBottom: theme.spacing.unit * 3,
 	},
@@ -61,6 +76,7 @@ class Vote extends React.Component {
 		super(props)
 
 		this.state = {
+			modalOpen: false,
 			talk: props.talk
 		}
 
@@ -85,36 +101,53 @@ class Vote extends React.Component {
 		.then(response => response.json())
 		.catch(e => console.error(e))
 
-		console.log(voted);
-
 		if (voted.success) {
 			const talk = await getNextTalk(token)
-
 			this.setState({
 				talk
 			})
-
 		}
+	}
 
+	showVoteUI () {
 
+		console.log('show vote ui');
+		this.setState({
+			modalOpen: true
+		})
+	}
+
+	modalClose () {
+		this.setState({
+			modalOpen: false
+		})
 	}
 
 	render() {
 		console.log(this.props, this.state)
 
-		const { talk } = this.state
+		const { talk, modalOpen } = this.state
 		const { classes, auth: { login, isAdmin, token } } = this.props
+
 		return (<div className={classes.root}>
 			<Grid container spacing={24}>
 				<Grid item xs={12}>
 				<Paper className={classes.paper}>
 					{vote_fields.map((field, i) => {
 						if (i === 0) {
-							return (<Typography variant="h3" className={classes.title} component="h3" key={`field-${i}`}>
+							return (<Typography
+								variant="h3"
+								className={classes.title}
+								key={`field-${i}`}
+							>
 								{talk.fields[field]}
 							</Typography>)
 						} else {
-							return (<Typography variant="body1" className={classes.p}>
+							return (<Typography
+								variant="body1"
+								className={classes.p}
+								key={`field-${i}`}
+							>
 							{talk.fields[field]}
 							</Typography>)
 						}
@@ -128,8 +161,20 @@ class Vote extends React.Component {
 
 				</Grid>
 			</Grid>
+			<MenuBar voting={true} showVoteUI={() => this.showVoteUI()} />
 
-			<MenuBar />
+			<Modal
+          		aria-labelledby="simple-modal-title"
+          		aria-describedby="simple-modal-description"
+          		open={modalOpen}
+          		onClose={e => this.modalClose()}
+        	><div className={classes.modal}>
+				<VoteControls
+					onVote={ value => this.onVote(talk.id, value) }
+					stage={'stage_1'}
+				/>
+				</div>
+			</Modal>
 		  </div>)
 	}
 
@@ -148,9 +193,6 @@ class Vote extends React.Component {
 		}
 
 		const talk = await getNextTalk(auth.token)
-
-		console.log(talk);
-
 
 		return { auth, talk }
 	}

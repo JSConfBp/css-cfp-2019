@@ -10,17 +10,17 @@ import IconButton from '@material-ui/core/IconButton';
 
 import Fab from '@material-ui/core/Fab';
 import MenuIcon from '@material-ui/icons/Menu';
-import AddIcon from '@material-ui/icons/Add';
+import AssessmentIcon from '@material-ui/icons/Assessment';
 
 
 
 const styles = theme => ({
 	appBar: {
-		[theme.breakpoints.down('sm')]: {
+		[theme.breakpoints.down('md')]: {
 			top: 'auto',
 			bottom: 0,
 		},
-		[theme.breakpoints.up('sm')]: {
+		[theme.breakpoints.up('md')]: {
 			top: 0,
 			bottom: 'auto',
 		},
@@ -36,7 +36,11 @@ const styles = theme => ({
 		left: 0,
 		right: 0,
 		margin: '0 auto',
-	  },
+		display: 'none',
+		[theme.breakpoints.down('sm')]: {
+			display: 'block',
+		},
+	},
 });
 
 class MenuBar extends React.Component {
@@ -87,8 +91,13 @@ class MenuBar extends React.Component {
 			  			<MenuIcon />
 					</IconButton>
 					{ voting ? (
-						<Fab onClick={this.props.showVoteUI()} color="secondary" aria-label="Vote" className={classes.fabButton}>
-							<AddIcon />
+						<Fab
+							onClick={e => this.props.showVoteUI()}
+							color="secondary"
+							aria-label="Vote"
+							className={classes.fabButton}
+						>
+							<AssessmentIcon />
 						</Fab>
 					):''}
 
