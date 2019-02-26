@@ -4,13 +4,21 @@ import { withStyles } from '@material-ui/core/styles';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import Drawer from '@material-ui/core/Drawer';
+import Divider from '@material-ui/core/Divider';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+
+
 import IconButton from '@material-ui/core/IconButton';
 
 import Fab from '@material-ui/core/Fab';
 import MenuIcon from '@material-ui/icons/Menu';
 import AssessmentIcon from '@material-ui/icons/Assessment';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import HomeIcon from '@material-ui/icons/Home';
 
 
 
@@ -24,6 +32,9 @@ const styles = theme => ({
 			top: 0,
 			bottom: 'auto',
 		},
+	},
+	list: {
+		width: 250,
 	},
 	toolbar: {
 		alignItems: 'center',
@@ -54,15 +65,13 @@ class MenuBar extends React.Component {
 
 	handleOpen(e) {
 		this.setState({
-			menuOpen: true,
-			menuElem: e.target
+			menuOpen: true
 		})
 	}
 
-	handleClose() {
+	toggleDrawer(open) {
 		this.setState({
-			menuElem: null,
-			menuOpen: false
+			menuOpen: open
 		})
 	}
 
@@ -71,20 +80,41 @@ class MenuBar extends React.Component {
 		const { menuOpen, menuElem } = this.state
 
 		return (<>
-			<Menu
-				anchorEl={ menuElem }
-				className={classes.menu}
-				open={ menuOpen }
-				onClose={e => this.handleClose() }
-			>
-				<MenuItem>
-					<Link to="vote">Vote!</Link>
-				</MenuItem>
-				<MenuItem>
-					<Link to="user">Home</Link>
-				</MenuItem>
-				<MenuItem>Logout</MenuItem>
-		  	</Menu>
+			<Drawer open={menuOpen} onClose={e => this.toggleDrawer(false)}>
+				<div
+					tabIndex={0}
+					role="button"
+					onClick={e => this.toggleDrawer(false)}
+					onKeyDown={e => this.toggleDrawer(false)}
+				>
+					<div className={classes.list}>
+						<List>
+							<ListItem button key={'vote'}>
+								<ListItemIcon><AssessmentIcon /></ListItemIcon>
+								<ListItemText>
+									<Link to="vote">Vote!</Link>
+								</ListItemText>
+							</ListItem>
+							<ListItem button key={'home'}>
+								<ListItemIcon><HomeIcon /></ListItemIcon>
+								<ListItemText>
+								<Link to="user">Home</Link>
+								</ListItemText>
+							</ListItem>
+						</List>
+						<Divider />
+						<List>
+							<ListItem button key={'home'}>
+								<ListItemIcon><ExitToAppIcon /></ListItemIcon>
+								<ListItemText>
+									Logout
+								</ListItemText>
+							</ListItem>
+						</List>
+					</div>
+				</div>
+			</Drawer>
+
 			<AppBar position="fixed" color="primary" className={classes.appBar}>
 		  		<Toolbar className={classes.toolbar}>
 					<IconButton onClick={e => this.handleOpen(e)} color="inherit" aria-label="Open drawer">

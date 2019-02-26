@@ -27,9 +27,6 @@ const styles = theme => ({
 		margin: '0 auto',
 		display: 'flex',
 		justifyContent: 'space-between',
-		[theme.breakpoints.down('sm')]: {
-			display: 'none'
-		}
 	}
 });
 

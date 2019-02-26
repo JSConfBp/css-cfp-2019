@@ -5,7 +5,7 @@ import { MuiThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import JssProvider from 'react-jss/lib/JssProvider'
 import getPageContext from '../lib/getPageContext';
-import deepOrange from '@material-ui/core/colors/deepOrange'
+
 import { wrapWithAuth } from '../components/Auth'
 import Route from '../components/Route'
 import routing from '../routing'

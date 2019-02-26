@@ -51,6 +51,11 @@ const styles = theme => ({
 	},
 	p: {
 		marginBottom: theme.spacing.unit * 2,
+	},
+	desktop_vote: {
+		[theme.breakpoints.down('sm')]: {
+			display: 'none'
+		}
 	}
 });
 
@@ -154,10 +159,12 @@ class Vote extends React.Component {
 					})}
 				</Paper>
 
-				<VoteControls
-					onVote={ value => this.onVote(talk.id, value) }
-					stage={'stage_1'}
-				/>
+				<div className={classes.desktop_vote}>
+					<VoteControls
+						onVote={ value => this.onVote(talk.id, value) }
+						stage={'stage_1'}
+					/>
+				</div>
 
 				</Grid>
 			</Grid>
