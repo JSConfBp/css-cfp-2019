@@ -1,7 +1,6 @@
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import getConfig from 'next/config'
-import Paper from '@material-ui/core/Paper';
 
 import VoteUIConfig from '../../cfp_ui.config'
 
