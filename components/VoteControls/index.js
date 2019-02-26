@@ -8,25 +8,10 @@ import VoteUIConfig from '../../cfp_ui.config'
 const { publicRuntimeConfig: { api_url } } = getConfig()
 
 const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  formControl: {
-    margin: theme.spacing.unit,
-  },
-  button: {
-	  marginTop: theme.spacing.unit * 5,
-  },
-  input: {
-	  display: 'none'
-	},
-	paper: {
-		width: '80vw',
-		padding: 24,
-		margin: '0 auto',
-		display: 'flex',
-		justifyContent: 'space-between',
+	vote_control: {
+		[theme.breakpoints.down('sm')]: {
+			flexBasis: `20%`
+		},
 	}
 });
 
@@ -48,9 +33,10 @@ class VoteControls extends React.Component {
 		const votingUi = VoteUIConfig.voting_ui[stage]
 
 	  return (
-		<Paper className={ classes.paper }>
+		<>
 			{votingUi.map((vote, i) => (
 				<Button
+					className={classes.vote_control}
 					key={`vote_${vote.value}`}
 					onClick={e => this.vote(vote.value)}
 					variant={'outlined'}
@@ -59,7 +45,7 @@ class VoteControls extends React.Component {
 				</Button>
 			))}
 
-		</Paper>
+		</>
 		);
 	}
   }

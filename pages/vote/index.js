@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
+import classNames from 'classnames'
 
 import Authenticated from '../../components/Auth'
 import MenuBar from '../../components/MenuBar'
@@ -44,7 +45,10 @@ const styles = theme => ({
     	boxShadow: theme.shadows[5],
 
     	outline: 'none',
-
+		display: 'flex',
+		flexWrap: `wrap`,
+		justifyContent: `space-between`,
+		padding: 20,
 	},
 	title: {
 		marginBottom: theme.spacing.unit * 3,
@@ -55,9 +59,23 @@ const styles = theme => ({
 	desktop_vote: {
 		[theme.breakpoints.down('sm')]: {
 			display: 'none'
-		}
-	}
+		},
+		display: 'flex',
+		flexWrap: `wrap`,
+		justifyContent: `space-between`
+	},
 });
+
+/*
+    display: flex;
+    padding: 20px;
+    flex-wrap: wrap;
+	justify-content: space-between;
+
+items
+flex-basis: 20%;
+
+	*/
 
 const getNextTalk = async (token) => {
 	return fetch(`${api_url}/v1/talk`,
@@ -107,6 +125,7 @@ class Vote extends React.Component {
 		.catch(e => console.error(e))
 
 		if (voted.success) {
+			this.modalClose()
 			const talk = await getNextTalk(token)
 			this.setState({
 				talk
@@ -115,8 +134,6 @@ class Vote extends React.Component {
 	}
 
 	showVoteUI () {
-
-		console.log('show vote ui');
 		this.setState({
 			modalOpen: true
 		})
@@ -159,12 +176,14 @@ class Vote extends React.Component {
 					})}
 				</Paper>
 
-				<div className={classes.desktop_vote}>
+
+				<Paper className={classNames(classes.paper, classes.desktop_vote)}>
 					<VoteControls
 						onVote={ value => this.onVote(talk.id, value) }
 						stage={'stage_1'}
 					/>
-				</div>
+				</Paper>
+
 
 				</Grid>
 			</Grid>

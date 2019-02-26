@@ -1,4 +1,5 @@
 module.exports = {
+	title: "CFP Vote Service",
 	voting_stages: [
 		{
 			name: 'stage_1',

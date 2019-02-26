@@ -10,6 +10,8 @@ import { wrapWithAuth } from '../components/Auth'
 import Route from '../components/Route'
 import routing from '../routing'
 
+import CfpUIConfig from '../cfp_ui.config'
+
 class MyApp extends App {
 
 	constructor() {
@@ -36,7 +38,7 @@ class MyApp extends App {
 
 	  return <Container>
 			<Head>
-				<title>TODO title goes here</title>
+				<title>{CfpUIConfig.title}</title>
 			</Head>
 			{/* Wrap every page in Jss and Theme providers */}
 			<JssProvider
