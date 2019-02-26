@@ -102,9 +102,6 @@ class Vote extends React.Component {
 			modalOpen: false,
 			talk: props.talk
 		}
-
-		// vote
-		// get next
 	}
 
 	async onVote (id, value) {
@@ -146,47 +143,43 @@ class Vote extends React.Component {
 	}
 
 	render() {
-		console.log(this.props, this.state)
-
 		const { talk, modalOpen } = this.state
 		const { classes, auth: { login, isAdmin, token } } = this.props
 
 		return (<div className={classes.root}>
 			<Grid container spacing={24}>
 				<Grid item xs={12}>
-				<Paper className={classes.paper}>
-					{vote_fields.map((field, i) => {
-						if (i === 0) {
-							return (<Typography
-								variant="h3"
-								className={classes.title}
-								key={`field-${i}`}
-							>
+					<Paper className={classes.paper}>
+						{vote_fields.map((field, i) => {
+							if (i === 0) {
+								return (<Typography
+									variant="h3"
+									className={classes.title}
+									key={`field-${i}`}
+								>
+									{talk.fields[field]}
+								</Typography>)
+							} else {
+								return (<Typography
+									variant="body1"
+									className={classes.p}
+									key={`field-${i}`}
+								>
 								{talk.fields[field]}
-							</Typography>)
-						} else {
-							return (<Typography
-								variant="body1"
-								className={classes.p}
-								key={`field-${i}`}
-							>
-							{talk.fields[field]}
-							</Typography>)
-						}
-					})}
-				</Paper>
+								</Typography>)
+							}
+						})}
+					</Paper>
 
-
-				<Paper className={classNames(classes.paper, classes.desktop_vote)}>
-					<VoteControls
-						onVote={ value => this.onVote(talk.id, value) }
-						stage={'stage_1'}
-					/>
-				</Paper>
-
-
+					<Paper className={classNames(classes.paper, classes.desktop_vote)}>
+						<VoteControls
+							onVote={ value => this.onVote(talk.id, value) }
+							stage={'stage_1'}
+						/>
+					</Paper>
 				</Grid>
 			</Grid>
+
 			<MenuBar voting={true} showVoteUI={() => this.showVoteUI()} />
 
 			<Modal

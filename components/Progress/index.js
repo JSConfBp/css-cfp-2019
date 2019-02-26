@@ -45,8 +45,8 @@ const styles = theme => ({
 
 class Progress extends React.Component {
 	render() {
-		
-		const {classes, name, stats} = this.props
+
+		const { classes, name, stats} = this.props
 		const { total, count } = stats.filter(stat => (stat.user === name))[0]
 
 		const percent = Math.round(100 * ( count / total))

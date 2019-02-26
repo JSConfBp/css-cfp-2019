@@ -16,8 +16,9 @@ import Progress from '../../components/Progress'
 const { publicRuntimeConfig: { api_url } } = getConfig()
 
 const styles = theme => ({
-	root: {
-	//	flexGrow: 1,
+	stats: {
+		display: 'flex',
+		justifyContent: 'space-around'
 	},
 	paper: theme.mixins.gutters({
 		margin: '0 auto',
@@ -61,60 +62,39 @@ class Index extends React.Component {
 		super(props)
 
 		this.state = {
-			stats: props.stats,
-			cfp: props.cfp
+			cfp: props.cfp,
+			stats: props.stats
 		}
-	}
-
-	async updateCfp(cfp) {
-		const stats = await getStats(this.props.auth.token)
-		const state = Object.assign({}, {
-			stats,
-			cfp
-		})
-		this.setState(state)
 	}
 
 	render() {
 		const { cfp, stats } = this.state
-		const { classes, auth: {login, isAdmin, token} } = this.props
+		const { classes, auth: { login } } = this.props
+
+console.log(stats);
+
 
 		return (<div className={classes.root}>
 		<Grid container spacing={24}>
 			<Grid item xs={12}>
 			<Paper className={classes.paper}>
 				<Typography className={classes.title} variant="h2">
-					Hello {login}
+					Statistics
 				</Typography>
 
 				{ cfp.year ? (<>
-					<Typography variant="body1">
-						Your Progress
-					</Typography>
-					<Typography variant="body1" component="div">
-						<Progress name={login} stats={stats} />
-					</Typography>
 
-				<Typography component="div">
-					<Button color="secondary" variant={'contained'} >
-						<Link to="vote"><a className={classes.linkButton}>
-							Go Vote!
-						</a></Link>
-					</Button>
-				</Typography>
+					<Typography variant="body1" component="div" className={ classes.stats }>
+
+				{stats.map(stat => (
+					<Progress name={stat.user} stats={stats} />
+
+				))}
+					</Typography>
 
 				</>) : (<Typography variant="body1">
 						CFP is not configured yet, check back later
 					</Typography>) }
-				{(isAdmin ? (
-					<AdminMenu
-						onUpdate={(data) => this.updateCfp(data)}
-						token={ token }
-						year={ cfp.year }
-						stage={ cfp.stage }
-					/>
-				) : '')}
-
 			</Paper>
 			</Grid>
 		</Grid>
@@ -137,7 +117,7 @@ class Index extends React.Component {
 			return
 		}
 
-		const cfpResponse = await fetch(`${api_url}/v1/cfp`,
+		const cfp = await fetch(`${api_url}/v1/cfp`,
 		{
 			method: 'GET',
 			headers: {
@@ -154,7 +134,7 @@ class Index extends React.Component {
 		return {
 			auth,
 			stats,
-			cfp: cfpResponse
+			cfp
 		}
 	}
 }

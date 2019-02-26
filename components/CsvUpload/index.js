@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   container: {
+		display: 'block'
   },
   formControl: {
     margin: theme.spacing.unit,

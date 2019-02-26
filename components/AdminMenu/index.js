@@ -19,7 +19,8 @@ const styles = theme => ({
 		marginTop: theme.spacing.unit * 5,
 	},
   formControl: {
-    marginTop: 20,
+		marginTop: 20,
+		display: 'block'
   },
   button: {
 	  marginTop: theme.spacing.unit * 5,
@@ -41,7 +42,8 @@ class AdminMenu extends React.Component {
 		super(props)
 
 		this.state = {
-			year: props.year
+			year: props.year,
+			votingStage: props.stage || VoteUIConfig.voting_stages[0].name
 		}
 	}
 
@@ -84,6 +86,8 @@ class AdminMenu extends React.Component {
 		const { year, votingStage } = this.state
 		const { voting_stages } = VoteUIConfig
 
+
+
 	  return (<Typography component="div" className={classes.adminMenu}>
 
 			<Typography variant="h5" className={classes.h5}>
@@ -102,7 +106,6 @@ class AdminMenu extends React.Component {
             onChange={e => this.handleVoteState(e.target.value)}
             input={<Input name="voting_stage" id="stage-helper" />}
           >
-            <option value=""></option>
 						{voting_stages.map(stage => (
 							<option value={stage.name}>{stage.label}</option>
 						))}
