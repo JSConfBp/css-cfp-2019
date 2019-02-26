@@ -34,7 +34,7 @@ class Index extends React.Component {
 
 
 		<div className={classes.paper}>
-			<Typography className={classes.title} variant="h1">
+			<Typography className={classes.title} variant="h2">
 				Conference CFP Voting
 			</Typography>
 			<Typography component="p">
