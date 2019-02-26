@@ -18,7 +18,8 @@ const { publicRuntimeConfig: { api_url } } = getConfig()
 const styles = theme => ({
 	stats: {
 		display: 'flex',
-		justifyContent: 'space-around'
+		justifyContent: 'space-around',
+		flexWrap: `wrap`,
 	},
 	paper: theme.mixins.gutters({
 		margin: '0 auto',
