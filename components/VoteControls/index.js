@@ -10,8 +10,12 @@ const { publicRuntimeConfig: { api_url } } = getConfig()
 const styles = theme => ({
 	vote_control: {
 		flexBasis: '9%',
+		marginBottom: 0,
+		padding: '15px 0',
 		[theme.breakpoints.down('sm')]: {
-			flexBasis: `20%`
+			flexBasis: `30%`,
+			padding: '15px 0',
+			marginBottom: 3
 		},
 	}
 });

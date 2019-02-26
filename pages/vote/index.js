@@ -47,7 +47,7 @@ const styles = theme => ({
     	outline: 'none',
 		display: 'flex',
 		flexWrap: `wrap`,
-		justifyContent: `space-between`,
+		justifyContent: `space-evenly`,
 		padding: 20,
 	},
 	title: {
