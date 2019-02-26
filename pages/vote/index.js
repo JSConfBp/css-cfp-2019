@@ -66,17 +66,6 @@ const styles = theme => ({
 	},
 });
 
-/*
-    display: flex;
-    padding: 20px;
-    flex-wrap: wrap;
-	justify-content: space-between;
-
-items
-flex-basis: 20%;
-
-	*/
-
 const getNextTalk = async (token) => {
 	return fetch(`${api_url}/v1/talk`,
 	{
@@ -90,8 +79,6 @@ const getNextTalk = async (token) => {
 	.then(response => response.json())
 	.catch(e => console.error(e))
 }
-
-//import styles from './styles.scss'
 
 class Vote extends React.Component {
 
@@ -107,7 +94,6 @@ class Vote extends React.Component {
 	async onVote (id, value) {
 		const { token } = this.props.auth
 
-		console.log('vote', value);
 		const voted = await fetch(`${api_url}/v1/vote`,
 		{
 			method: 'POST',

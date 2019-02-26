@@ -11,7 +11,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-
 import IconButton from '@material-ui/core/IconButton';
 
 import Fab from '@material-ui/core/Fab';
@@ -19,8 +18,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AssessmentIcon from '@material-ui/icons/Assessment';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import HomeIcon from '@material-ui/icons/Home';
-
-
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 
 const styles = theme => ({
 	appBar: {
@@ -52,6 +50,18 @@ const styles = theme => ({
 			display: 'block',
 		},
 	},
+	menuDrawer: {
+		display: 'flex',
+		height: `100%`,
+		alignItems: `flex-start`,
+		[theme.breakpoints.down('sm')]: {
+			alignItems: `flex-end`,
+		}
+	},
+	menuLink: {
+		color: 'inherit',
+		textDecoration: 'none'
+	}
 });
 
 class MenuBar extends React.Component {
@@ -82,6 +92,7 @@ class MenuBar extends React.Component {
 		return (<>
 			<Drawer open={menuOpen} onClose={e => this.toggleDrawer(false)}>
 				<div
+					className={ classes.menuDrawer }
 					tabIndex={0}
 					role="button"
 					onClick={e => this.toggleDrawer(false)}
@@ -89,18 +100,30 @@ class MenuBar extends React.Component {
 				>
 					<div className={classes.list}>
 						<List>
-							<ListItem button key={'vote'}>
-								<ListItemIcon><AssessmentIcon /></ListItemIcon>
-								<ListItemText>
-									<Link to="vote">Vote!</Link>
-								</ListItemText>
-							</ListItem>
-							<ListItem button key={'home'}>
-								<ListItemIcon><HomeIcon /></ListItemIcon>
-								<ListItemText>
-								<Link to="user">Home</Link>
-								</ListItemText>
-							</ListItem>
+							<Link to="vote">
+								<ListItem button key={'vote'}>
+									<ListItemIcon><AssessmentIcon /></ListItemIcon>
+									<ListItemText>
+										<a className={classes.menuLink}>Vote!</a>
+									</ListItemText>
+								</ListItem>
+							</Link>
+							<Link to="stats">
+								<ListItem button key={'home'}>
+									<ListItemIcon><TrendingUpIcon /></ListItemIcon>
+									<ListItemText>
+										<a className={classes.menuLink}>Statistics</a>
+									</ListItemText>
+								</ListItem>
+							</Link>
+							<Link to="user">
+								<ListItem button key={'home'}>
+									<ListItemIcon><HomeIcon /></ListItemIcon>
+									<ListItemText>
+										<a className={classes.menuLink}>Home</a>
+									</ListItemText>
+								</ListItem>
+							</Link>
 						</List>
 						<Divider />
 						<List>

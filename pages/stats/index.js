@@ -5,12 +5,9 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 
-import Link from '../../components/Link';
 import Authenticated from '../../components/Auth'
 import MenuBar from '../../components/MenuBar';
-import AdminMenu from '../../components/AdminMenu'
 import Progress from '../../components/Progress'
 
 const { publicRuntimeConfig: { api_url } } = getConfig()
@@ -70,36 +67,32 @@ class Index extends React.Component {
 
 	render() {
 		const { cfp, stats } = this.state
-		const { classes, auth: { login } } = this.props
-
-console.log(stats);
-
+		const { classes } = this.props
 
 		return (<div className={classes.root}>
 		<Grid container spacing={24}>
 			<Grid item xs={12}>
-			<Paper className={classes.paper}>
-				<Typography className={classes.title} variant="h2">
-					Statistics
-				</Typography>
-
-				{ cfp.year ? (<>
-
-					<Typography variant="body1" component="div" className={ classes.stats }>
-
-				{stats.map(stat => (
-					<Progress name={stat.user} stats={stats} />
-
-				))}
+				<Paper className={classes.paper}>
+					<Typography className={classes.title} variant="h2">
+						Statistics
 					</Typography>
 
-				</>) : (<Typography variant="body1">
-						CFP is not configured yet, check back later
-					</Typography>) }
-			</Paper>
+					{ cfp.year ? (<>
+
+						<Typography variant="body1" component="div" className={ classes.stats }>
+
+					{stats.map(stat => (
+						<Progress name={stat.user} stats={stats} />
+
+					))}
+						</Typography>
+
+					</>) : (<Typography variant="body1">
+							CFP is not configured yet, check back later
+						</Typography>) }
+				</Paper>
 			</Grid>
 		</Grid>
-
 		<MenuBar />
 	  </div>)
 	}
