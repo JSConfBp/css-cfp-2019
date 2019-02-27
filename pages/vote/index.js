@@ -28,6 +28,10 @@ const styles = theme => ({
 		[theme.breakpoints.down('md')]: {
 			marginBottom: 100,
 			marginTop: 32,
+			width: '100vw',
+			marginLeft: 0,
+			marginRight: 0,
+			boxShadow: 'none',
 		},
 		[theme.breakpoints.up('md')]: {
 			marginBottom: 32,
@@ -51,10 +55,12 @@ const styles = theme => ({
 		padding: 20,
 	},
 	title: {
-		marginBottom: theme.spacing.unit * 3,
+		lineHeight: 1.2,
+		marginBottom: theme.spacing.unit * 4,
 	},
 	p: {
-		marginBottom: theme.spacing.unit * 2,
+		lineHeight: 1.5,
+		marginBottom: theme.spacing.unit * 4,
 	},
 	desktop_vote: {
 		[theme.breakpoints.down('sm')]: {
@@ -113,6 +119,7 @@ class Vote extends React.Component {
 			this.setState({
 				talk
 			})
+			window.scrollTo(0,0)
 		}
 	}
 
@@ -135,7 +142,7 @@ class Vote extends React.Component {
 		return (<div className={classes.root}>
 			<Grid container spacing={24}>
 				<Grid item xs={12}>
-					<Paper className={classes.paper}>
+					<Paper className={classes.paper} elevation="1">
 						{vote_fields.map((field, i) => {
 							if (i === 0) {
 								return (<Typography
@@ -157,7 +164,7 @@ class Vote extends React.Component {
 						})}
 					</Paper>
 
-					<Paper className={classNames(classes.paper, classes.desktop_vote)}>
+					<Paper  elevation="1" className={classNames(classes.paper, classes.desktop_vote)}>
 						<VoteControls
 							onVote={ value => this.onVote(talk.id, value) }
 							stage={'stage_1'}

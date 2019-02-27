@@ -11,7 +11,9 @@ const styles = theme => ({
 		flexBasis: '9%',
 		marginBottom: 0,
 		padding: '15px 0',
+		fontSize: theme.spacing.unit * 2.2,
 		[theme.breakpoints.down('sm')]: {
+			fontSize: theme.spacing.unit * 3,
 			flexBasis: `30%`,
 			padding: '15px 0',
 			marginBottom: 3
