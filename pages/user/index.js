@@ -77,12 +77,15 @@ class Index extends React.Component {
 
 	render() {
 		const { cfp, stats } = this.state
+
+		console.log(this.state);
+
 		const { classes, auth: {login, isAdmin, token} } = this.props
 
 		return (<div className={classes.root}>
 		<Grid container spacing={24}>
 			<Grid item xs={12}>
-			<Paper className={classes.paper} elevation="1">
+			<Paper className={classes.paper} elevation={1}>
 				<Typography className={classes.title} variant="h2">
 					Hello {login}
 				</Typography>

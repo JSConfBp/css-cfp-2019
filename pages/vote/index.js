@@ -11,7 +11,6 @@ import Authenticated from '../../components/Auth'
 import MenuBar from '../../components/MenuBar'
 import VoteControls from '../../components/VoteControls'
 
-
 import Modal from '@material-ui/core/Modal';
 
 const { publicRuntimeConfig: { api_url, vote_fields } } = getConfig()
@@ -25,6 +24,8 @@ const styles = theme => ({
 		paddingTop: 32,
 		paddingBottom: 32,
 		margin: '0 auto',
+		boxShadow: 'inherit',
+
 		[theme.breakpoints.down('md')]: {
 			marginBottom: 100,
 			marginTop: 32,

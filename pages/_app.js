@@ -10,7 +10,7 @@ import { wrapWithAuth } from '../components/Auth'
 import Route from '../components/Route'
 import routing from '../routing'
 
-import CfpUIConfig from '../cfp_ui.config'
+import CfpUIConfig from '../cfp.config'
 
 class MyApp extends App {
 
