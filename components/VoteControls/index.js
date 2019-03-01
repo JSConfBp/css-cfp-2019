@@ -2,7 +2,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import getConfig from 'next/config'
 
-import VoteUIConfig from '../../cfp_ui.config'
+import VoteUIConfig from '../../cfp.config'
 
 const { publicRuntimeConfig: { api_url } } = getConfig()
 

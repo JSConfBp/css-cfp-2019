@@ -1,5 +1,10 @@
 module.exports = {
 	title: "CFP Vote Service",
+	cfp_fields: [
+		"Presentation title",
+		"Presentation summary to be displayed on the website",
+		"Presentation summary"
+	],
 	voting_stages: [
 		{
 			name: 'stage_1',
