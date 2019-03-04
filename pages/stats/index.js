@@ -72,7 +72,7 @@ class Index extends React.Component {
 		return (<div className={classes.root}>
 		<Grid container spacing={24}>
 			<Grid item xs={12}>
-				<Paper className={classes.paper} elevation="1">
+				<Paper className={classes.paper} elevation={1}>
 					<Typography className={classes.title} variant="h2">
 						Statistics
 					</Typography>
@@ -80,7 +80,7 @@ class Index extends React.Component {
 					{ cfp.year ? (<>
 						<Typography variant="body1" component="div" className={ classes.stats }>
 					{stats.map(stat => (
-						<Progress name={stat.user} stats={stats} />
+						<Progress key={`${stat.user}-votes`} name={stat.user} stats={stats} />
 
 					))}
 						</Typography>

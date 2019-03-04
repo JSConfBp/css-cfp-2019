@@ -59,7 +59,7 @@ class AdminMenu extends React.Component {
 		this.state = {
 			deleteConfirmationOpen: false,
 			year: props.year,
-			votingStage: props.stage || VoteUIConfig.voting_stages[0].name
+			votingStage: props.stage || 'stage_1'
 		}
 	}
 
@@ -145,7 +145,7 @@ class AdminMenu extends React.Component {
 		  })
 		  .then(r => r.json())
 		  .then(({ stage }) => {
-				this.setState({votingStage: VoteUIConfig.voting_stages[0].name})
+				this.setState({votingStage: VoteUIConfig.voting_stages['stage_1'].name})
 				this.props.onUpdate({ count, year })
 		  })
 		  .catch(e => {
@@ -185,8 +185,8 @@ class AdminMenu extends React.Component {
 					onChange={e => this.handleVoteState(e.target.value)}
 					input={<Input name="voting_stage" id="stage-helper" />}
 				>
-				{voting_stages.map(stage => (
-					<option value={stage.name} key={stage.name}>{stage.label}</option>
+				{Object.entries(voting_stages).map(([key, stage]) => (
+					<option value={key} key={key}>{stage.label}</option>
 				))}
           		</NativeSelect>
           		<FormHelperText>Update this if you're ready to summarize the first vote round</FormHelperText>
