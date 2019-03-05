@@ -138,7 +138,7 @@ class Vote extends React.Component {
 
 	render() {
 		const { talk, modalOpen } = this.state
-		const { classes, auth: { login, isAdmin, token } } = this.props
+		const { classes, stage, auth: { login, isAdmin, token } } = this.props
 
 		return (<div className={classes.root}>
 			<Grid container spacing={24}>
@@ -168,7 +168,7 @@ class Vote extends React.Component {
 					<Paper  elevation={1} className={classNames(classes.paper, classes.desktop_vote)}>
 						<VoteControls
 							onVote={ value => this.onVote(talk.id, value) }
-							stage={'stage_1'}
+							stage={ stage }
 						/>
 					</Paper>
 				</Grid>
@@ -184,7 +184,7 @@ class Vote extends React.Component {
         	><div className={classes.modal}>
 				<VoteControls
 					onVote={ value => this.onVote(talk.id, value) }
-					stage={'stage_1'}
+					stage={ stage }
 				/>
 				</div>
 			</Modal>
@@ -205,9 +205,22 @@ class Vote extends React.Component {
 			return
 		}
 
+		const cfpResponse = await fetch(`${api_url}/v1/cfp`,
+		{
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Authorization': auth.token
+			}
+		})
+		.then(response => response.json())
+		.catch(e => console.error(e))
+
+		const { stage } = cfpResponse
 		const talk = await getNextTalk(auth.token)
 
-		return { auth, talk }
+		return { auth, talk, stage }
 	}
 }
 
