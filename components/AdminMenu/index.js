@@ -114,9 +114,9 @@ class AdminMenu extends React.Component {
 			)
 		  })
 		  .then(r => r.json())
-		  .then(({ stage }) => {
+		  .then(({ count, year, stage }) => {
 				this.setState({votingStage: stage})
-				//this.props.onUpdate({count, year})
+				this.props.onUpdate({count, year})
 		  })
 		  .catch(e => {
 				this.setState({
@@ -130,8 +130,8 @@ class AdminMenu extends React.Component {
 			deleteConfirmationOpen: true
 		})
 	}
-	confirmSubmit () {
-		this.confirmClose()
+	confirmDeleteSubmit () {
+		this.confirmDeleteClose()
 
 		const { token } = this.props
 
@@ -155,7 +155,7 @@ class AdminMenu extends React.Component {
 		  })
 	}
 
-	confirmClose () {
+	confirmDeleteClose () {
 		this.setState({
 			deleteConfirmationOpen: false
 		})
@@ -214,7 +214,7 @@ class AdminMenu extends React.Component {
           		aria-labelledby="simple-modal-title"
           		aria-describedby="simple-modal-description"
           		open={deleteConfirmationOpen}
-          		onClose={e => this.confirmClose()}
+          		onClose={e => this.confirmDeleteClose()}
         	><div className={classes.modal}>
 				<Typography  variant="body1">
 					This will reset the app, removing every submission and every vote!
@@ -227,7 +227,7 @@ class AdminMenu extends React.Component {
 					  color="secondary"
 					  className={classes.modalButton}
 					  variant={'contained'}
-					  onClick={e => this.confirmSubmit()}
+					  onClick={e => this.confirmDeleteSubmit()}
 					>
 						Yes, remove them
 					</Button>
@@ -235,7 +235,7 @@ class AdminMenu extends React.Component {
 					  color="primary"
 					  className={classes.modalButton}
 					  variant={'text'}
-					  onClick={e => this.confirmClose()}
+					  onClick={e => this.confirmDeleteClose()}
 					>
 						Cancel
 					</Button>
