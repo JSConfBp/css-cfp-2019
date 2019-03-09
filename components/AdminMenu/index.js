@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -6,9 +7,14 @@ import NativeSelect from '@material-ui/core/NativeSelect';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
-import Modal from '@material-ui/core/Modal';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+import Download from './Download'
+import Delete from './Delete'
 import CsvUpload from '../CsvUpload'
 import getConfig from 'next/config'
 
@@ -20,44 +26,31 @@ const styles = theme => ({
 	adminMenu: {
 		marginTop: theme.spacing.unit * 5,
 	},
-  formControl: {
+  	formControl: {
 		marginTop: 20,
 		display: 'block'
-  },
-  button: {
-	  marginTop: theme.spacing.unit * 5,
-  },
-  input: {
-	  display: 'none'
+  	},
+  	button: {
+		marginTop: theme.spacing.unit * 5,
+  	},
+  	input: {
+	  	display: 'none'
 	},
 	h5: {
 		marginBottom: 32,
 	},
-	modal: {
-		top: '50%',
-		minHeight: '20vh',
-		minWidth: '20vw',
-		position: 'fixed',
-		left: '50%',
-		transform: 'translate(-50%, -50%)',
-    	backgroundColor: theme.palette.background.paper,
-    	boxShadow: theme.shadows[5],
-    	outline: 'none',
-		padding: 20,
-	},
-	modalButton: {
-		marginRight: 10
+	closedPanels: {
+		marginBottom: 16,
 	}
 });
 
 class AdminMenu extends React.Component {
 
-
 	constructor (props) {
 		super(props)
 
 		this.state = {
-			deleteConfirmationOpen: false,
+			expanded: '',
 			year: props.year,
 			votingStage: props.stage || 'stage_1'
 		}
@@ -125,123 +118,136 @@ class AdminMenu extends React.Component {
 		  })
 	}
 
-	removeAllClick () {
+	expandPanel(id) {
+		if (this.state.expanded === id) {
+			this.setState({
+				expanded: ''
+			})
+			return
+		}
 		this.setState({
-			deleteConfirmationOpen: true
-		})
-	}
-	confirmDeleteSubmit () {
-		this.confirmDeleteClose()
-
-		const { token } = this.props
-
-		fetch(`${api_url}/v1/cfp`, {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json',
-				'Accept': 'application/json',
-			  	'Authorization': token
-			}
-		  })
-		  .then(r => r.json())
-		  .then(({ stage }) => {
-				this.setState({votingStage: VoteUIConfig.voting_stages['stage_1'].name})
-				this.props.onUpdate({ count, year })
-		  })
-		  .catch(e => {
-				this.setState({
-					error: this.state.activeStep,
-				});
-		  })
-	}
-
-	confirmDeleteClose () {
-		this.setState({
-			deleteConfirmationOpen: false
+			expanded: id
 		})
 	}
 
 	render() {
-		const { classes } = this.props
-		const { year, votingStage, deleteConfirmationOpen } = this.state
+		const { classes, token } = this.props
+		const { year, votingStage, expanded } = this.state
 		const { voting_stages } = VoteUIConfig
 
+		const adminPanels = classNames({
+			[classes.closedPanels]: !expanded,
+		});
 
-	  return (<Typography component="div" className={classes.adminMenu}>
+
+		return (<Typography component="div" className={classes.adminMenu}>
 
 			<Typography variant="h5" className={classes.h5}>
 				Administration
 			</Typography>
 
-			<Typography variant="body1">
+			<Typography variant="body1" className={adminPanels}>
 				You're marked as an admin, so you can access some advanced features.<br />
 				But be careful, you know <em>"with great power comes great responsibility"</em>!
 			</Typography>
 
-			<FormControl className={classes.formControl}>
-          		<InputLabel htmlFor="stage-helper">Voting Stage</InputLabel>
-          		<NativeSelect
-					value={votingStage}
-					onChange={e => this.handleVoteState(e.target.value)}
-					input={<Input name="voting_stage" id="stage-helper" />}
-				>
-				{Object.entries(voting_stages).map(([key, stage]) => (
-					<option value={key} key={key}>{stage.label}</option>
-				))}
-          		</NativeSelect>
-          		<FormHelperText>Update this if you're ready to summarize the first vote round</FormHelperText>
-			</FormControl>
-			<FormControl className={classes.formControl}>
-				  <Button onClick={e => this.updateStage()}color="secondary" variant={'contained'} >Update Stage</Button>
-			</FormControl>
+			{ year ? (<>
+			<ExpansionPanel
+				expanded={expanded === 'stage'}
+				onChange={e => this.expandPanel('stage')}
+			>
+          		<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            		<Typography className={classes.heading}>
+						Voting Stage
+					</Typography>
+          		</ExpansionPanelSummary>
+          		<ExpansionPanelDetails>
+            		<Typography>
 
-			<FormControl className={classes.formControl}>
+						<FormControl className={classes.formControl}>
+							<InputLabel htmlFor="stage-helper">Update voting stage</InputLabel>
+							<NativeSelect
+								value={votingStage}
+								onChange={e => this.handleVoteState(e.target.value)}
+								input={<Input name="voting_stage" id="stage-helper" />}
+							>
+								{Object.entries(voting_stages).map(([key, stage]) => (
+									<option value={key} key={key}>{stage.label}</option>
+								))}
+							</NativeSelect>
+							<FormHelperText>Update this if you're ready to summarize the first vote round</FormHelperText>
+						</FormControl>
+						<FormControl className={classes.formControl}>
+							<Button onClick={e => this.updateStage()}color="secondary" variant={'contained'} >Update Stage</Button>
+						</FormControl>
+
+            		</Typography>
+          		</ExpansionPanelDetails>
+        	</ExpansionPanel>
+
+			<ExpansionPanel
+				expanded={expanded === 'export'}
+				onChange={e => this.expandPanel('export')}
+			>
+          		<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            		<Typography className={classes.heading}>
+						Download Data
+					</Typography>
+          		</ExpansionPanelSummary>
+          		<ExpansionPanelDetails>
+            		<Typography>
+
+						<FormControl className={classes.formControl}>
+							<Typography component="div" variant="body1">
+								<Download token={token} />
+							</Typography>
+						</FormControl>
+
+            		</Typography>
+          		</ExpansionPanelDetails>
+        	</ExpansionPanel>
+
+			<ExpansionPanel
+				expanded={expanded === 'delete'}
+				onChange={e => this.expandPanel('delete')}
+			>
+          		<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            		<Typography className={classes.heading}>
+						Delete Data
+					</Typography>
+          		</ExpansionPanelSummary>
+          		<ExpansionPanelDetails>
+            		<Typography>
+						<Delete token={ token } />
+            		</Typography>
+          		</ExpansionPanelDetails>
+        	</ExpansionPanel>
+			</>): ''}
+
+			{ !year ? (
+			<ExpansionPanel
+				expanded={expanded === 'upload'}
+				onChange={e => this.expandPanel('upload')}
+			>
+          		<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            		<Typography className={classes.heading}>
+						Upload CFP
+					</Typography>
+          		</ExpansionPanelSummary>
+          		<ExpansionPanelDetails>
+            		<Typography>
+					<FormControl className={classes.formControl}>
 				<Typography component="div" variant="body1">
-				{ year ? (<Button
-					onClick={e => this.removeAllClick()}
-					color="secondary"
-					variant={'outlined'}
-				>
-					Remove all CFP data
-				</Button>) : (
 					<CsvUpload
-						onFile={(...data) => this.onFile(...data)} />)
-				}
+						onFile={(...data) => this.onFile(...data)} />
 				</Typography>
 			</FormControl>
+            		</Typography>
+          		</ExpansionPanelDetails>
+        	</ExpansionPanel>
+			): ''}
 
-			<Modal
-          		aria-labelledby="simple-modal-title"
-          		aria-describedby="simple-modal-description"
-          		open={deleteConfirmationOpen}
-          		onClose={e => this.confirmDeleteClose()}
-        	><div className={classes.modal}>
-				<Typography  variant="body1">
-					This will reset the app, removing every submission and every vote!
-				</Typography>
-				<Typography variant="body1">
-					Are you sure?
-				</Typography>
-				<FormControl className={classes.formControl}>
-				  <Button
-					  color="secondary"
-					  className={classes.modalButton}
-					  variant={'contained'}
-					  onClick={e => this.confirmDeleteSubmit()}
-					>
-						Yes, remove them
-					</Button>
-				  <Button
-					  color="primary"
-					  className={classes.modalButton}
-					  variant={'text'}
-					  onClick={e => this.confirmDeleteClose()}
-					>
-						Cancel
-					</Button>
-				</FormControl>
-			</div>
-			</Modal>
+
 
 		</Typography>);
 	}

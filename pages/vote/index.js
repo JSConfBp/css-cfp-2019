@@ -20,6 +20,7 @@ const styles = theme => ({
 		flexGrow: 1,
 	},
 	paper: theme.mixins.gutters({
+		background: 'none',
 		width: '80vw',
 		paddingTop: 32,
 		paddingBottom: 32,
@@ -143,7 +144,7 @@ class Vote extends React.Component {
 		return (<div className={classes.root}>
 			<Grid container spacing={24}>
 				<Grid item xs={12}>
-					<Paper className={classes.paper} elevation={1}>
+					<Paper className={classes.paper} elevation={0}>
 						{vote_fields.map((field, i) => {
 							if (i === 0) {
 								return (<Typography
@@ -165,7 +166,7 @@ class Vote extends React.Component {
 						})}
 					</Paper>
 
-					<Paper  elevation={1} className={classNames(classes.paper, classes.desktop_vote)}>
+					<Paper  elevation={0} className={classNames(classes.paper, classes.desktop_vote)}>
 						<VoteControls
 							onVote={ value => this.onVote(talk.id, value) }
 							stage={ stage }

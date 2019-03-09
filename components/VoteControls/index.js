@@ -10,6 +10,7 @@ const styles = theme => ({
 	vote_control: {
 		flexBasis: '24%',
 		marginBottom: 0,
+		background: 'white',
 		padding: '15px 0',
 		fontSize: theme.spacing.unit * 2.2,
 		[theme.breakpoints.down('sm')]: {
