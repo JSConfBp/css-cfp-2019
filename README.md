@@ -35,14 +35,25 @@ If your App is connected to GitHub, go to it's Settings tab, and edit the config
 
 * **API_URL**  
 the service url that you set up in Step 2
+* **GH_OAUTH_CLIENT_ID**
+* **GH_OAUTH_CLIENT_SECRET**  
+these are displayed on your GitHub Org OAuth application page
+* GH_REDIRECT_URI  
+this should point to a path on this app, like this  
+https://__HEROKU_APP_NAME__.herokuapp.com/oauth
 
-GH_OAUTH_CLIENT_ID
-GH_OAUTH_CLIENT_SECRET
-// get these from
+If you've added these, go to the Deploy tab on Heroku, scroll to the bottom, and do a manual deploy .
 
-GH_REDIRECT_URI
-// https://__THIS HEROKU APP URL__/oauth
+![Manual deploy to Heroku](https://raw.githubusercontent.com/JSConfBp/cfp-vote-ui/master/docs/heroku-manual-deploy.png)
 
 ### Do not forget to update your GitHub OAuth app URLs!
+
+Go back to the OAuth settings on GitHub, and edit the URLs.
+
+* your "Application URL" is the Heroku app url, something like this  
+https://__HEROKU_APP_NAME__.herokuapp.com/
+
+* the "Authorization callback URL" is the `/oauth` path on the app  
+https://__HEROKU_APP_NAME__.herokuapp.com/oauth
 
 
