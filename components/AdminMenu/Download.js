@@ -88,7 +88,7 @@ class Download extends React.Component {
 				loading: false,
 				success: false
 			})
-			console.log(e);
+			console.error(e);
 		}
 	}
 

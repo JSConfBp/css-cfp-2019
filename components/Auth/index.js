@@ -75,7 +75,7 @@ export const wrapWithAuth = (App) => {
 						app.ctx.auth = auth
 						//console.log('authenticate 2 - has token!');
 					} catch (e) {
-						console.log('authenticate 2 - TOKEN ERR', e);
+						//console.log('authenticate 2 - TOKEN ERR', e);
 					}
 				}
 			} else {

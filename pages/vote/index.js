@@ -86,11 +86,6 @@ const getNextTalk = async (token) => {
 		}
 	})
 	.then(response => response.json())
-	.then(response => {
-		console.log(response);
-		return response
-
-	})
 	.catch(e => console.error(e))
 }
 
@@ -148,7 +143,6 @@ class Vote extends React.Component {
 		const { classes, stage, auth: { login, isAdmin, token } } = this.props
 
 		const { cfp_fields } = VoteUIConfig
-		console.log(talk, cfp_fields);
 
 		return (<div className={classes.root}>
 			<Grid container spacing={24}>
