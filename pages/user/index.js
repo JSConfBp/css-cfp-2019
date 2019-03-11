@@ -83,9 +83,6 @@ class Index extends React.Component {
 
 	render() {
 		const { cfp, stats } = this.state
-
-		console.log(this.state);
-
 		const { classes, auth: {login, isAdmin, token} } = this.props
 
 		return (<div className={classes.root}>
@@ -110,6 +107,7 @@ class Index extends React.Component {
 
 					<Typography variant="body1" component="div">
 						<Progress name={login} stats={stats} />
+						{/*<TotalProgress stats={stats}/> */}
 					</Typography>
 
 					<Typography component="div">

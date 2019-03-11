@@ -12,8 +12,9 @@ import MenuBar from '../../components/MenuBar'
 import VoteControls from '../../components/VoteControls'
 
 import Modal from '@material-ui/core/Modal';
+import VoteUIConfig from '../../cfp.config'
 
-const { publicRuntimeConfig: { api_url, vote_fields } } = getConfig()
+const { publicRuntimeConfig: { api_url } } = getConfig()
 
 const styles = theme => ({
 	root: {
@@ -141,11 +142,13 @@ class Vote extends React.Component {
 		const { talk, modalOpen } = this.state
 		const { classes, stage, auth: { login, isAdmin, token } } = this.props
 
+		const { cfp_fields } = VoteUIConfig
+
 		return (<div className={classes.root}>
 			<Grid container spacing={24}>
 				<Grid item xs={12}>
 					<Paper className={classes.paper} elevation={0}>
-						{vote_fields.map((field, i) => {
+						{cfp_fields.map((field, i) => {
 							if (i === 0) {
 								return (<Typography
 									variant="h3"
