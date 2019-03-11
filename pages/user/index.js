@@ -1,5 +1,6 @@
 import React from 'react'
 import fetch from 'isomorphic-unfetch'
+import classNames from 'classnames'
 import getConfig from 'next/config'
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -12,27 +13,31 @@ import Authenticated from '../../components/Auth'
 import MenuBar from '../../components/MenuBar';
 import AdminMenu from '../../components/AdminMenu'
 import Progress from '../../components/Progress'
+import TotalProgress from '../../components/TotalProgress'
 
 const { publicRuntimeConfig: { api_url } } = getConfig()
 
 const styles = theme => ({
-	root: {
-	//	flexGrow: 1,
-	},
 	paper: theme.mixins.gutters({
 		background: 'none',
 		margin: '0 auto',
 		width: '80vw',
+	}),
+	paper_first: {
+		paddingTop: 32,
 		marginTop: 20,
-		[theme.breakpoints.down('sm')]: {
-			marginBottom: 70,
-		},
+		marginBottom: 20,
 		[theme.breakpoints.up('sm')]: {
 			marginTop: 70,
 		},
-		paddingTop: 32,
-		paddingBottom: 32,
-	}),
+	},
+	paper_last: {
+		marginTop: 20,
+		marginBottom: 20,
+		[theme.breakpoints.down('sm')]: {
+			marginBottom: 70,
+		},
+	},
 	title: {
 		marginBottom: theme.spacing.unit * 3,
 	},
@@ -86,30 +91,47 @@ class Index extends React.Component {
 		return (<div className={classes.root}>
 		<Grid container spacing={24}>
 			<Grid item xs={12}>
-			<Paper className={classes.paper} elevation={0}>
-				<Typography className={classes.title} variant="h2">
-					Hello {login}
-				</Typography>
+				<Paper className={classNames(classes.paper, classes.paper_first)} elevation={0}>
+
+					<Typography className={classes.title} variant="h2">
+						Hello {login}
+					</Typography>
+
+				</Paper>
+			</Grid>
+
+			<Grid item xs={12}>
+				<Paper className={classes.paper} elevation={0}>
 
 				{ cfp.year ? (<>
 					<Typography variant="body1">
 						Your Progress
 					</Typography>
+
 					<Typography variant="body1" component="div">
 						<Progress name={login} stats={stats} />
+						<TotalProgress stats={stats}/>
 					</Typography>
 
-				<Typography component="div">
-					<Button color="secondary" variant={'contained'} >
-						<Link to="vote"><a className={classes.linkButton}>
-							Go Vote!
-						</a></Link>
-					</Button>
-				</Typography>
+					<Typography component="div">
+						<Button color="secondary" variant={'contained'} >
+							<Link to="vote"><a className={classes.linkButton}>
+								Go Vote!
+							</a></Link>
+						</Button>
+					</Typography>
 
 				</>) : (<Typography variant="body1">
 						CFP is not configured yet, check back later
 					</Typography>) }
+
+
+					</Paper>
+			</Grid>
+
+			<Grid item xs={12}>
+			<Paper className={classNames(classes.paper, classes.paper_last)} elevation={0}>
+
 				{(isAdmin ? (
 					<AdminMenu
 						onUpdate={(data) => this.updateCfp(data)}
