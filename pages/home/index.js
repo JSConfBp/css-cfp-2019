@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
 import GithubLogin from '../../components/GithubLogin'
+import VoteUIConfig from '../../cfp.config'
 
 const styles = theme => ({
 	root: {
@@ -35,7 +36,7 @@ class Index extends React.Component {
 
 		<div className={classes.paper}>
 			<Typography className={classes.title} variant="h2">
-				Conference CFP Voting
+				{ VoteUIConfig.title }
 			</Typography>
 			<Typography component="p">
 				<GithubLogin>Login with GitHub</GithubLogin>
