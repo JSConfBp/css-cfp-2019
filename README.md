@@ -38,7 +38,7 @@ the service url that you set up in Step 2
 * **GH_OAUTH_CLIENT_ID**
 * **GH_OAUTH_CLIENT_SECRET**  
 these are displayed on your GitHub Org OAuth application page
-* GH_REDIRECT_URI  
+* **GH_REDIRECT_URI**  
 this should point to a path on this app, like this  
 https://__HEROKU_APP_NAME__.herokuapp.com/oauth
 
