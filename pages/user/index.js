@@ -107,7 +107,7 @@ class Index extends React.Component {
 
 					<Typography variant="body1" component="div">
 						<Progress name={login} stats={stats} />
-						{/*<TotalProgress stats={stats}/> */}
+						<TotalProgress stats={stats}/> 
 					</Typography>
 
 					<Typography component="div">

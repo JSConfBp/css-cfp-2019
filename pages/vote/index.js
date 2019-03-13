@@ -1,17 +1,17 @@
 import React from 'react'
 import fetch from 'isomorphic-unfetch'
+import classNames from 'classnames'
 import getConfig from 'next/config'
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper'
+import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
-import classNames from 'classnames'
 
 import Authenticated from '../../components/Auth'
 import MenuBar from '../../components/MenuBar'
 import VoteControls from '../../components/VoteControls'
 
-import Modal from '@material-ui/core/Modal';
+import Modal from '@material-ui/core/Modal'
 import VoteUIConfig from '../../cfp.config'
 
 const { publicRuntimeConfig: { api_url } } = getConfig()
@@ -140,45 +140,59 @@ class Vote extends React.Component {
 
 	render() {
 		const { talk, modalOpen } = this.state
-		const { classes, stage, auth: { login, isAdmin, token } } = this.props
+		const { classes, stage } = this.props
 
+		const { completed } = talk
 		const { cfp_fields } = VoteUIConfig
 
 		return (<div className={classes.root}>
 			<Grid container spacing={24}>
 				<Grid item xs={12}>
 					<Paper className={classes.paper} elevation={0}>
-						{cfp_fields.map((field, i) => {
-							if (i === 0) {
-								return (<Typography
-									variant="h3"
-									className={classes.title}
-									key={`field-${i}`}
-								>
-									{talk.fields[field]}
-								</Typography>)
-							} else {
-								return (<Typography
-									variant="body1"
-									className={classes.p}
-									key={`field-${i}`}
-								>
+
+					{completed ? (<Typography
+						variant="body1"
+						className={classes.p}
+					>
+						Nice job, you're completed voting in this stage.
+					</Typography>) : ''}
+
+					{ !completed ? (cfp_fields.map((field, i) => {
+						if (i === 0) {
+							return (<Typography
+								variant="h3"
+								className={classes.title}
+								key={`field-${i}`}
+							>
 								{talk.fields[field]}
-								</Typography>)
-							}
-						})}
+							</Typography>)
+						} else {
+							return (<Typography
+								variant="body1"
+								className={classes.p}
+								key={`field-${i}`}
+							>
+								{talk.fields[field]}
+							</Typography>)
+						}
+					})
+					) : ''}
+
 					</Paper>
 
+					{ !completed ? (
 					<Paper  elevation={0} className={classNames(classes.paper, classes.desktop_vote)}>
 						<VoteControls
 							onVote={ value => this.onVote(talk.id, value) }
 							stage={ stage }
 						/>
 					</Paper>
+					) : ''}
+
 				</Grid>
 			</Grid>
 
-			<MenuBar voting={true} showVoteUI={() => this.showVoteUI()} />
+			<MenuBar voting={!completed} showVoteUI={() => this.showVoteUI()} />
 
 			<Modal
           		aria-labelledby="simple-modal-title"

@@ -39,17 +39,19 @@ const styles = theme => ({
 		left: 0,
 		width: 128,
 		textAlign: 'center',
-		top: 44,
+		top: 54,
 	},
 });
 
 class TotalProgress extends React.Component {
 	render() {
+		const { classes, stats} = this.props
 
-		const { classes, name, stats} = this.props
-//		const { total, count } = stats.filter(stat => (stat.user === name))[0]
+		const userCount = stats.length
+		const total = stats[0].total
+		const sum = stats.reduce((sum, stat) => (sum + stat.count), 0)
 
-		const percent = Math.round(100 * ( count / total))
+		const percent = Math.round(100 * (sum / (userCount * total)))
 
 		return <div className={classes.progress}>
 			<CircularProgress
@@ -60,8 +62,7 @@ class TotalProgress extends React.Component {
 				className={classes.shadow} variant="static" value={100} />
 
 			<span className={classes.percent}>
-				{percent}% <br />
-				{count} / {total}
+				{percent}%
 			</span>
 			<strong className={classes.name}>
 				Total progress
