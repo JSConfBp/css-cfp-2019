@@ -1,27 +1,40 @@
 import React from 'react'
-import Link from '../Link';
-import { withStyles } from '@material-ui/core/styles';
+import Link from '../Link'
+import { withStyles } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography';
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Drawer from '@material-ui/core/Drawer'
+import Divider from '@material-ui/core/Divider'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
 
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Drawer from '@material-ui/core/Drawer';
-import Divider from '@material-ui/core/Divider';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import IconButton from '@material-ui/core/IconButton'
 
-import IconButton from '@material-ui/core/IconButton';
+import Fab from '@material-ui/core/Fab'
+import MenuIcon from '@material-ui/icons/Menu'
+import AssessmentIcon from '@material-ui/icons/Assessment'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import HomeIcon from '@material-ui/icons/Home'
+import TrendingUpIcon from '@material-ui/icons/TrendingUp'
 
-import Fab from '@material-ui/core/Fab';
-import MenuIcon from '@material-ui/icons/Menu';
-import AssessmentIcon from '@material-ui/icons/Assessment';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import HomeIcon from '@material-ui/icons/Home';
-import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import VoteUIConfig from '../../cfp.config'
 
 const styles = theme => ({
+	grow: {
+		flexGrow: 1,
+	},
+	title: {
+		flexGrow: 1,
+		paddingLeft: 30,
+		[theme.breakpoints.down('sm')]: {
+			display: 'none'
+		}
+	},
 	appBar: {
+		flexGrow: 1,
 		[theme.breakpoints.down('md')]: {
 			top: 'auto',
 			bottom: 0,
@@ -62,12 +75,12 @@ const styles = theme => ({
 		color: 'inherit',
 		textDecoration: 'none'
 	}
-});
+})
 
 class MenuBar extends React.Component {
 	state = {
 		menuOpen: false
-	};
+	}
 
 	constructor (props) {
 		super(props)
@@ -154,10 +167,16 @@ class MenuBar extends React.Component {
 						</Fab>
 					):''}
 
+					<Typography
+						variant="h6"
+						color="inherit"
+						className={classes.title}>
+						{VoteUIConfig.title}
+					</Typography>
 		  		</Toolbar>
 			</AppBar>
-		</>);
+		</>)
 	}
   }
 
-  export default withStyles(styles)(MenuBar);
+  export default withStyles(styles)(MenuBar)

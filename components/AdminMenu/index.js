@@ -109,7 +109,7 @@ class AdminMenu extends React.Component {
 		  .then(r => r.json())
 		  .then(({ count, year, stage }) => {
 				this.setState({votingStage: stage})
-				this.props.onUpdate({count, year})
+				this.props.onUpdate({count, year, stage})
 		  })
 		  .catch(e => {
 				this.setState({

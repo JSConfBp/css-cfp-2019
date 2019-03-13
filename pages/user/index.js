@@ -95,7 +95,6 @@ class Index extends React.Component {
 
 		const stageLabel = VoteUIConfig.voting_stages[cfp.stage].label
 
-
 		return (<><div className={classes.centered}>
 
 			<Grid container spacing={24}>
