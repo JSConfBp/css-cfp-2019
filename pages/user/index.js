@@ -15,10 +15,15 @@ import AdminMenu from '../../components/AdminMenu'
 import Progress from '../../components/Progress'
 import TotalProgress from '../../components/TotalProgress'
 
+import VoteUIConfig from '../../cfp.config'
+
 const { publicRuntimeConfig: { api_url } } = getConfig()
 
 const styles = theme => ({
-	paper: theme.mixins.gutters({
+	paper: {
+		background: 'none',
+	},
+	centered: theme.mixins.gutters({
 		background: 'none',
 		margin: '0 auto',
 		width: '80vw',
@@ -37,6 +42,9 @@ const styles = theme => ({
 		[theme.breakpoints.down('sm')]: {
 			marginBottom: 70,
 		},
+	},
+	progressButton: {
+		margin: '0 auto',
 	},
 	title: {
 		marginBottom: theme.spacing.unit * 3,
@@ -85,65 +93,74 @@ class Index extends React.Component {
 		const { cfp, stats } = this.state
 		const { classes, auth: {login, isAdmin, token} } = this.props
 
-		return (<div className={classes.root}>
-		<Grid container spacing={24}>
-			<Grid item xs={12}>
-				<Paper className={classNames(classes.paper, classes.paper_first)} elevation={0}>
+		const stageLabel = VoteUIConfig.voting_stages[cfp.stage].label
 
-					<Typography className={classes.title} variant="h2">
-						Hello {login}
-					</Typography>
 
-				</Paper>
-			</Grid>
+		return (<><div className={classes.centered}>
 
-			<Grid item xs={12}>
-				<Paper className={classes.paper} elevation={0}>
+			<Grid container spacing={24}>
+				<Grid item xs={12}>
+					<Paper className={classNames(classes.paper, classes.paper_first)} elevation={0}>
+						<Typography className={classes.title} variant="h2">
+							Hello {login}
+						</Typography>
+					</Paper>
+				</Grid>
 
 				{ cfp.year ? (<>
-					<Typography variant="body1">
-						Your Progress
-					</Typography>
 
-					<Typography variant="body1" component="div">
-						<Progress name={login} stats={stats} />
-						<TotalProgress stats={stats}/> 
-					</Typography>
+					<Grid item xs={12}>
+						<Typography variant="body1">
+							Voting Progress for {stageLabel}
+						</Typography>
+					</Grid>
 
-					<Typography component="div">
-						<Button color="secondary" variant={'contained'} >
-							<Link to="vote"><a className={classes.linkButton}>
-								Go Vote!
-							</a></Link>
-						</Button>
-					</Typography>
+					<Grid item xs={12} sm={3}>
 
-				</>) : (<Typography variant="body1">
-						CFP is not configured yet, check back later
-					</Typography>) }
+						<Typography variant="body1" component="div">
+							<Progress name={login} stats={stats} />
+						</Typography>
 
+						<Typography component="div">
+							<Button
+								className={classes.progressButton}
+								color="secondary"
+								variant={'contained'}
+							>
+								<Link to="vote"><a className={classes.linkButton}>
+									Go Vote!
+								</a></Link>
+							</Button>
+						</Typography>
 
+					</Grid>
+
+					<Grid item xs={12} sm={3}>
+
+						<Typography variant="body1" component="div">
+							<TotalProgress stats={stats} />
+						</Typography>
+
+					</Grid>
+				</>) : (<Grid item xs={12}><Typography variant="body1">
+					CFP is not configured yet, check back later
+				</Typography></Grid>) }
+
+				<Grid item xs={12}>
+					<Paper className={classNames(classes.paper, classes.paper_last)} elevation={0}>
+					{(isAdmin ? (
+						<AdminMenu
+							onUpdate={(data) => this.updateCfp(data)}
+							token={ token }
+							year={ cfp.year }
+							stage={ cfp.stage }
+						/>
+					) : '')}
 					</Paper>
+				</Grid>
 			</Grid>
-
-			<Grid item xs={12}>
-			<Paper className={classNames(classes.paper, classes.paper_last)} elevation={0}>
-
-				{(isAdmin ? (
-					<AdminMenu
-						onUpdate={(data) => this.updateCfp(data)}
-						token={ token }
-						year={ cfp.year }
-						stage={ cfp.stage }
-					/>
-				) : '')}
-
-			</Paper>
-			</Grid>
-		</Grid>
-
-		<MenuBar />
-	  </div>)
+		</div>
+		<MenuBar /></>)
 	}
 
 	static async getInitialProps({ req, res, store, auth }) {

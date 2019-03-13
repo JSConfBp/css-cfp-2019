@@ -8,6 +8,7 @@ const styles = theme => ({
 	progress: {
 		width: 128,
 		height: 160,
+		margin: '0 auto',
 		marginBottom: 32,
 		marginTop: 16,
 		position: 'relative'

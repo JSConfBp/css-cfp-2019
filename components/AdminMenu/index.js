@@ -162,7 +162,7 @@ class AdminMenu extends React.Component {
 					</Typography>
           		</ExpansionPanelSummary>
           		<ExpansionPanelDetails>
-            		<Typography>
+            		<Typography variant="body1" component="div">
 
 						<FormControl className={classes.formControl}>
 							<InputLabel htmlFor="stage-helper">Update voting stage</InputLabel>
@@ -195,7 +195,7 @@ class AdminMenu extends React.Component {
 					</Typography>
           		</ExpansionPanelSummary>
           		<ExpansionPanelDetails>
-            		<Typography>
+            		<Typography component="div" variant="body1">
 
 						<FormControl className={classes.formControl}>
 							<Typography component="div" variant="body1">
@@ -217,7 +217,7 @@ class AdminMenu extends React.Component {
 					</Typography>
           		</ExpansionPanelSummary>
           		<ExpansionPanelDetails>
-            		<Typography>
+            		<Typography component="div" variant="body1">
 						<Delete token={ token } />
             		</Typography>
           		</ExpansionPanelDetails>
@@ -235,14 +235,12 @@ class AdminMenu extends React.Component {
 					</Typography>
           		</ExpansionPanelSummary>
           		<ExpansionPanelDetails>
-            		<Typography>
 					<FormControl className={classes.formControl}>
-				<Typography component="div" variant="body1">
-					<CsvUpload
-						onFile={(...data) => this.onFile(...data)} />
-				</Typography>
-			</FormControl>
-            		</Typography>
+						<Typography component="div" variant="body1">
+							<CsvUpload
+								onFile={(...data) => this.onFile(...data)} />
+						</Typography>
+					</FormControl>
           		</ExpansionPanelDetails>
         	</ExpansionPanel>
 			): ''}
