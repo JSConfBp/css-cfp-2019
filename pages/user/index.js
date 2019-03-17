@@ -93,7 +93,11 @@ class Index extends React.Component {
 		const { cfp, stats } = this.state
 		const { classes, auth: {login, isAdmin, token} } = this.props
 
-		const stageLabel = VoteUIConfig.voting_stages[cfp.stage].label
+		let stageLabel = ''
+		if (cfp.stage) {
+			stageLabel = VoteUIConfig.voting_stages[cfp.stage].label
+		}
+
 
 		return (<><div className={classes.centered}>
 
