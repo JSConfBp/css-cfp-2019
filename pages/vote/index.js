@@ -95,6 +95,7 @@ class Vote extends React.Component {
 		super(props)
 
 		this.state = {
+			loading: false,
 			modalOpen: false,
 			talk: props.talk
 		}
@@ -102,6 +103,9 @@ class Vote extends React.Component {
 
 	async onVote (id, value) {
 		const { token } = this.props.auth
+		this.setState({
+			loading: true
+		})
 
 		const voted = await fetch(`${api_url}/v1/vote`,
 		{
@@ -120,7 +124,8 @@ class Vote extends React.Component {
 			this.modalClose()
 			const talk = await getNextTalk(token)
 			this.setState({
-				talk
+				talk,
+				loading: false
 			})
 			window.scrollTo(0,0)
 		}
@@ -139,7 +144,7 @@ class Vote extends React.Component {
 	}
 
 	render() {
-		const { talk, modalOpen } = this.state
+		const { talk, modalOpen, loading } = this.state
 		const { classes, stage } = this.props
 
 		const { completed } = talk
@@ -183,6 +188,7 @@ class Vote extends React.Component {
 					{ !completed ? (
 					<Paper  elevation={0} className={classNames(classes.paper, classes.desktop_vote)}>
 						<VoteControls
+							loading={ loading }
 							onVote={ value => this.onVote(talk.id, value) }
 							stage={ stage }
 						/>
@@ -201,6 +207,7 @@ class Vote extends React.Component {
           		onClose={e => this.modalClose()}
         	><div className={classes.modal}>
 				<VoteControls
+					loading={ loading }
 					onVote={ value => this.onVote(talk.id, value) }
 					stage={ stage }
 				/>

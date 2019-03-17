@@ -19,33 +19,26 @@ const styles = theme => ({
 			padding: '15px 0',
 			marginBottom: 3
 		},
+		[theme.breakpoints.down('xs')]: {
+			fontSize: theme.spacing.unit * 2,
+
+		},
 	}
 });
 
 class VoteControls extends React.Component {
-
-	constructor (props) {
-		super(props)
-		this.state = {
-		}
-	}
-
-	vote = (value) => {
-		this.props.onVote(value)
-	};
-
 	render() {
-		const { classes, stage } = this.props
-
+		const { classes, stage, loading = false } = this.props
 		const votingUi = VoteUIConfig.voting_ui[stage]
 
 	  return (
 		<>
 			{votingUi.map((vote, i) => (
 				<Button
+					disabled={ loading }
 					className={classes.vote_control}
 					key={`vote_${vote.value}`}
-					onClick={e => this.vote(vote.value)}
+					onClick={e => this.props.onVote(vote.value)}
 					variant={'outlined'}
 					color="primary">
 						{ vote.label }
