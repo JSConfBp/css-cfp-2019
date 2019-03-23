@@ -6,6 +6,8 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 
+import Histogram from '../../components/Histogram'
+
 import Authenticated from '../../components/Auth'
 import MenuBar from '../../components/MenuBar';
 import Progress from '../../components/Progress'
@@ -55,6 +57,20 @@ const getStats = async (token) => {
 		.catch(e => console.error(e))
 }
 
+const getHistogram = async (token) => {
+	return fetch(`${api_url}/v1/histogram`,
+		{
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'Authorization': token
+			}
+		})
+		.then(response => response.json())
+		.catch(e => console.error(e))
+}
+
 class Index extends React.Component {
 
 	constructor (props) {
@@ -68,7 +84,7 @@ class Index extends React.Component {
 
 	render() {
 		const { cfp, stats } = this.state
-		const { classes } = this.props
+		const { classes, histogram } = this.props
 
 		return (<div className={classes.root}>
 		<Grid container spacing={24}>
@@ -89,6 +105,11 @@ class Index extends React.Component {
 					</>) : (<Typography variant="body1">
 							CFP is not configured yet, check back later
 						</Typography>) }
+
+
+					{ Object.entries(histogram).map(([stage, data]) => (
+						<Histogram stage={ stage } data={ data } />
+					)) }
 				</Paper>
 			</Grid>
 		</Grid>
@@ -123,10 +144,12 @@ class Index extends React.Component {
 		.catch(e => console.error(e))
 
 		const stats = await getStats(auth.token)
+		const histogram = await getHistogram(auth.token)
 
 		return {
 			auth,
 			stats,
+			histogram,
 			cfp
 		}
 	}
