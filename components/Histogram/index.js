@@ -17,7 +17,11 @@ class Histogram extends React.Component {
 	render() {
 		const { classes, data, stage } = this.props
 		const cols = data.map(bucket => bucket.label)
-		
+		const sum = data.reduce((val,bucket) => {
+			val += bucket.count
+			return val
+		}, 0)
+
 		return <Table className={classes.table}>
 			<TableHead>
 				<TableRow>
@@ -31,9 +35,13 @@ class Histogram extends React.Component {
 					<TableCell component="th" scope="row">
 						{ VoteUIConfig.voting_stages[stage].label }
 					</TableCell>
-					{ data.map((bucket, i) => (
-						<TableCell align="right" key={`bucket-stage-${i}`}>{bucket.count}</TableCell>
-					)) }
+					{ data.map((bucket, i) => {
+						let value = 0
+						if (sum > 0) {
+							value = Math.round((bucket.count / sum) * 100)
+						}
+						return (<TableCell align="right" key={`bucket-stage-${i}`}>{ value }%</TableCell>)
+					}) }
 				</TableRow>
 
 			</TableBody>
