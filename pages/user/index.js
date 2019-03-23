@@ -125,15 +125,18 @@ class Index extends React.Component {
 						</Typography>
 
 						<Typography component="div">
-							<Button
-								className={classes.progressButton}
-								color="secondary"
-								variant={'contained'}
-							>
-								<Link to="vote"><a className={classes.linkButton}>
-									Go Vote!
-								</a></Link>
-							</Button>
+							<Link to="vote">
+								<Button
+									className={classes.progressButton}
+									color="secondary"
+									variant={'contained'}
+									href=""
+								>
+									<a className={classes.linkButton}>
+										Go Vote!
+									</a>
+								</Button>
+							</Link>
 						</Typography>
 
 					</Grid>
