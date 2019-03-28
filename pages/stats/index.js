@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 
 import Histogram from '../../components/Histogram'
+import StagedVotesChart from '../../components/StagedVotesChart'
 
 import Authenticated from '../../components/Auth'
 import MenuBar from '../../components/MenuBar';
@@ -107,9 +108,14 @@ class Index extends React.Component {
 						</Typography>) }
 
 
-					{ Object.entries(histogram).map(([stage, data]) => (
-						<Histogram stage={ stage } data={ data } />
+					{ Object.entries(histogram.votes).map(([stage, data]) => (
+						<Histogram stage={ stage } data={ data } key={`hist_${stage}`} />
 					)) }
+
+
+					{ Object.entries(histogram.talks).map(([stage, data]) => {
+						if (data.length > 0) return (<StagedVotesChart stage={ stage } data={ data } key={`chart_${stage}`} />)
+					}) }
 				</Paper>
 			</Grid>
 		</Grid>

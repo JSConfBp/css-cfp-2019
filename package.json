@@ -48,6 +48,7 @@
     "react-dom": "^16.8.3",
     "react-jss": "^8.6.1",
     "react-redux": "^6.0.1",
+    "recharts": "^1.5.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "styled-jsx": "^3.2.1",
