@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
+import Link from '../Link'
 import Typography from '@material-ui/core/Typography';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
@@ -15,18 +16,20 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import Download from './Download'
 import Delete from './Delete'
-import CsvUpload from '../CsvUpload'
+import UploadCfp from '../UploadCfp'
+import ImportCfp from '../ImportCfp'
 import getConfig from 'next/config'
+const { publicRuntimeConfig: { api_url } } = getConfig()
 
 import VoteUIConfig from '../../cfp.config'
 
-const { publicRuntimeConfig: { api_url } } = getConfig()
 
 const styles = theme => ({
 	adminMenu: {
 		marginTop: theme.spacing.unit * 5,
 	},
   	formControl: {
+		width: '100%',
 		marginTop: 20,
 		display: 'block'
   	},
@@ -52,7 +55,8 @@ class AdminMenu extends React.Component {
 		this.state = {
 			expanded: '',
 			year: props.year,
-			votingStage: props.stage || 'stage_1'
+			votingStage: props.stage || 'stage_1',
+			voteLimit: 30
 		}
 	}
 
@@ -89,9 +93,15 @@ class AdminMenu extends React.Component {
 		})
 	}
 
+	handleVoteLimit (val) {
+		this.setState({
+			voteLimit: val
+		})
+	}
+
 	updateStage () {
 		const { token } = this.props
-		const { votingStage } = this.state
+		const { votingStage, voteLimit } = this.state
 
 		fetch(`${api_url}/v1/cfp`, {
 			method: 'PUT',
@@ -102,6 +112,7 @@ class AdminMenu extends React.Component {
 			},
 			body: JSON.stringify(
 				{
+					voteLimit,
 					stage: votingStage
 				}
 			)
@@ -178,6 +189,20 @@ class AdminMenu extends React.Component {
 							<FormHelperText>Update this if you're ready to summarize the first vote round</FormHelperText>
 						</FormControl>
 						<FormControl className={classes.formControl}>
+							<InputLabel htmlFor="vote-limit">Vote count limit</InputLabel>
+							<Input
+								type="number"
+								id="vote-limit"
+								value={this.state.voteLimit}
+								onChange={ (e) => this.handleVoteLimit(e.target.value)}
+								aria-describedby="vote-limit-helper-text"
+							/>
+							<FormHelperText id="vote-limit-helper-text">
+								Include talks in second round with votes at least as much as this value.<br />
+								See the vote/talk chart in <Link to="stats"><a>Statistics</a></Link> to determine this number
+							</FormHelperText>
+						</FormControl>
+						<FormControl className={classes.formControl}>
 							<Button onClick={e => this.updateStage()}color="secondary" variant={'contained'} >Update Stage</Button>
 						</FormControl>
 
@@ -224,26 +249,42 @@ class AdminMenu extends React.Component {
         	</ExpansionPanel>
 			</>): ''}
 
-			{ !year ? (
+			{ !year ? (<>
 			<ExpansionPanel
 				expanded={expanded === 'upload'}
 				onChange={e => this.expandPanel('upload')}
 			>
           		<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             		<Typography className={classes.heading}>
-						Upload CFP
+						Upload CFP from csv export
 					</Typography>
           		</ExpansionPanelSummary>
           		<ExpansionPanelDetails>
 					<FormControl className={classes.formControl}>
 						<Typography component="div" variant="body1">
-							<CsvUpload
-								onFile={(...data) => this.onFile(...data)} />
+							<UploadCfp onFile={(...data) => this.onFile(...data)} />
 						</Typography>
 					</FormControl>
           		</ExpansionPanelDetails>
         	</ExpansionPanel>
-			): ''}
+			<ExpansionPanel
+				expanded={expanded === 'import'}
+				onChange={e => this.expandPanel('import')}
+			>
+          		<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            		<Typography className={classes.heading}>
+						Import CFP from Google Spreadsheets
+					</Typography>
+          		</ExpansionPanelSummary>
+          		<ExpansionPanelDetails>
+					<FormControl className={classes.formControl}>
+						<Typography component="div" variant="body1">
+							<ImportCfp token={token} />
+						</Typography>
+					</FormControl>
+          		</ExpansionPanelDetails>
+        	</ExpansionPanel>
+			</>): ''}
 
 
 
