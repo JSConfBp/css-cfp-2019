@@ -17,7 +17,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Download from './Download'
 import Delete from './Delete'
 import UploadCfp from '../UploadCfp'
-import ImportCfp from '../ImportCfp'
+//import ImportCfp from '../ImportCfp'
+
 import getConfig from 'next/config'
 const { publicRuntimeConfig: { api_url } } = getConfig()
 
@@ -267,6 +268,7 @@ class AdminMenu extends React.Component {
 					</FormControl>
           		</ExpansionPanelDetails>
         	</ExpansionPanel>
+			{/*
 			<ExpansionPanel
 				expanded={expanded === 'import'}
 				onChange={e => this.expandPanel('import')}
@@ -282,8 +284,8 @@ class AdminMenu extends React.Component {
 							<ImportCfp token={token} />
 						</Typography>
 					</FormControl>
-          		</ExpansionPanelDetails>
-        	</ExpansionPanel>
+				  </ExpansionPanelDetails>
+        	</ExpansionPanel>*/}
 			</>): ''}
 
 
